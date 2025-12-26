@@ -6,7 +6,7 @@
     
     <!-- Branding -->
     <title>Christmas Memories · N43 Ritual</title>
-    <meta name="description" content="Christmas Memories. Annual Ritual v1.1. Curated by Kelly Hung · Nirvana Finance Buddy. © NirvanaCity">
+    <meta name="description" content="Christmas Memories. Annual Ritual v1.2 Christmas Special. Curated by Kelly Hung · Nirvana Finance Buddy. © NirvanaCity">
     <meta name="author" content="Kelly Hung">
     
     <!-- Fonts -->
@@ -36,6 +36,7 @@
         /* Colors */
         .text-amber-glow { color: #D4AF37; }
         .text-amber-dim { color: #8B5E3C; }
+        .text-cyan-glow { color: #4FD1C5; }
         .text-stone-300 { color: #d6d3d1; }
         .text-stone-400 { color: #a8a29e; }
         .text-stone-500 { color: #78716c; }
@@ -46,12 +47,15 @@
         .bg-stone-700 { background-color: #44403c; }
         .bg-amber-glow { background-color: #D4AF37; }
         .border-amber-glow { border-color: #D4AF37; }
+        .border-cyan-glow { border-color: #4FD1C5; }
         .border-stone-600 { border-color: #57534e; }
         .border-stone-700 { border-color: #44403c; }
         .border-stone-800 { border-color: #292524; }
-        .bg-amber-glow\/5 { background-color: rgba(212, 175, 55, 0.05); }
+        .bg-amber-glow\/10 { background-color: rgba(212, 175, 55, 0.1); }
+        .bg-cyan-glow\/10 { background-color: rgba(79, 209, 197, 0.1); }
         .opacity-30 { opacity: 0.3; }
         .opacity-50 { opacity: 0.5; }
+        .opacity-60 { opacity: 0.6; }
         .opacity-70 { opacity: 0.7; }
         .opacity-100 { opacity: 1; }
         
@@ -115,9 +119,16 @@
         .justify-center { justify-content: center; }
         .justify-between { justify-content: space-between; }
         .gap-0\.5 { gap: 0.125rem; }
+        .gap-1 { gap: 0.25rem; }
         .gap-2 { gap: 0.5rem; }
         
+        /* Grid */
+        .grid { display: grid; }
+        .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        
         /* Spacing */
+        .p-2 { padding: 0.5rem; }
+        .p-3 { padding: 0.75rem; }
         .p-5 { padding: 1.25rem; }
         .p-6 { padding: 1.5rem; }
         .p-8 { padding: 2rem; }
@@ -127,6 +138,7 @@
         .pl-2 { padding-left: 0.5rem; }
         .mb-1 { margin-bottom: 0.25rem; }
         .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
         .mb-4 { margin-bottom: 1rem; }
         .mb-5 { margin-bottom: 1.25rem; }
         .mt-0\.5 { margin-top: 0.125rem; }
@@ -162,6 +174,7 @@
         .border-2 { border-width: 2px; }
         .border-l-2 { border-left-width: 2px; }
         .rounded { border-radius: 0.25rem; }
+        .rounded-lg { border-radius: 0.5rem; }
         .rounded-full { border-radius: 9999px; }
         
         /* Effects */
@@ -228,6 +241,7 @@
         
         button:hover .hover\:text-stone-300 { color: #d6d3d1; }
         .hover\:border-amber-glow:hover { border-color: #D4AF37; }
+        .hover\:border-stone-500:hover { border-color: #78716c; }
         
         /* Responsive */
         @media (min-width: 768px) {
@@ -265,42 +279,135 @@
         const { Canvas, useFrame } = window.ReactThreeFiber;
         const { OrbitControls, PerspectiveCamera, Stars, Sparkles } = window.drei;
 
-        // Shaders with Default State Support
-        const RITUAL_VERT = `
+        // ============================================
+        // SHADERS - Multi-Shape Support
+        // ============================================
+        
+        const VERTEX_SHADER = `
             uniform float uTime;
-            uniform float uExpansion; 
-            attribute vec3 aRandom; 
-            attribute vec4 aUV;     
+            uniform float uExpansion;
+            uniform int uShape; // 0=tree, 1=giftbox, 2=uranus
+            attribute vec3 aRandom;
+            attribute vec4 aUV;
             varying vec2 vUv;
             varying float vExpansion;
             varying float vBrightness;
             varying vec4 vAtlasUV;
+            varying vec3 vColor;
             
             void main() {
                 vAtlasUV = aUV;
                 vExpansion = uExpansion;
                 vec3 pos = position;
                 
-                float breathe = sin(uTime * 1.5 + pos.y * 0.5) * 0.08 * (1.0 - uExpansion);
-                vec3 explodeDir = normalize(pos) * 12.0; 
-                vec3 spiralPos = pos + normal * breathe;
+                // ===== SHAPE 0: TREE =====
+                if (uShape == 0) {
+                    float breathe = sin(uTime * 1.5 + pos.y * 0.5) * 0.08 * (1.0 - uExpansion);
+                    vec3 explodeDir = normalize(pos) * 12.0;
+                    vec3 spiralPos = pos + normal * breathe;
+                    float t = smoothstep(0.0, 1.0, uExpansion);
+                    vec3 drift = vec3(
+                        sin(uTime * 0.5 + aRandom.x * 10.0),
+                        cos(uTime * 0.3 + aRandom.y * 10.0),
+                        sin(uTime * 0.4 + aRandom.z * 10.0)
+                    ) * 0.5 * t;
+                    pos = mix(spiralPos, spiralPos + explodeDir * aRandom.x * 2.5 + drift, t);
+                    vColor = vec3(0.83, 0.68, 0.21); // Gold
+                }
                 
-                float t = smoothstep(0.0, 1.0, uExpansion);
+                // ===== SHAPE 1: GIFT BOX =====
+                else if (uShape == 1) {
+                    // Box arrangement (cube)
+                    float boxSize = 3.0;
+                    float gridSize = 5.0;
+                    int idx = int(aRandom.z * 125.0); // 5x5x5 = 125 particles
+                    
+                    int x = idx % 5;
+                    int y = (idx / 5) % 5;
+                    int z = idx / 25;
+                    
+                    pos.x = (float(x) - 2.0) * boxSize / gridSize;
+                    pos.y = (float(y) - 2.0) * boxSize / gridSize;
+                    pos.z = (float(z) - 2.0) * boxSize / gridSize;
+                    
+                    // Bow on top (special particles)
+                    if (y == 4) {
+                        vColor = vec3(0.9, 0.2, 0.2); // Red bow
+                    } else {
+                        vColor = vec3(0.9, 0.7, 0.2); // Gold box
+                    }
+                    
+                    // Opening animation
+                    if (uExpansion > 0.0) {
+                        vec3 explosionDir = normalize(pos) * 8.0;
+                        float rotation = uExpansion * 3.14159;
+                        pos += explosionDir * uExpansion;
+                        pos.x += sin(rotation + aRandom.x * 6.28) * 2.0 * uExpansion;
+                        pos.z += cos(rotation + aRandom.y * 6.28) * 2.0 * uExpansion;
+                    }
+                }
                 
-                vec3 drift = vec3(
-                    sin(uTime * 0.5 + aRandom.x * 10.0),
-                    cos(uTime * 0.3 + aRandom.y * 10.0),
-                    sin(uTime * 0.4 + aRandom.z * 10.0)
-                ) * 0.5 * t;
-
-                vec3 finalPos = mix(spiralPos, spiralPos + explodeDir * aRandom.x * 2.5 + drift, t);
-                vec4 mvPosition = modelViewMatrix * vec4(finalPos, 1.0);
+                // ===== SHAPE 2: URANUS =====
+                else if (uShape == 2) {
+                    float radius = 3.5;
+                    int particleIndex = int(aRandom.z * 203.0);
+                    
+                    // Core sphere (150 particles)
+                    if (particleIndex < 150) {
+                        float theta = aRandom.x * 6.28318;
+                        float phi = aRandom.y * 3.14159;
+                        pos.x = radius * sin(phi) * cos(theta);
+                        pos.y = radius * sin(phi) * sin(theta);
+                        pos.z = radius * cos(phi);
+                        vColor = mix(vec3(0.31, 0.82, 0.77), vec3(0.22, 0.70, 0.67), aRandom.y);
+                    }
+                    // Rings (26 particles - vertical!)
+                    else if (particleIndex < 176) {
+                        float angle = aRandom.x * 6.28318;
+                        float ringRadius = radius * 1.6;
+                        pos.x = ringRadius * cos(angle);
+                        pos.z = ringRadius * sin(angle);
+                        pos.y = 0.0;
+                        // Rotate to vertical
+                        float temp = pos.y;
+                        pos.y = pos.z;
+                        pos.z = temp;
+                        vColor = vec3(0.7, 0.96, 0.92);
+                    }
+                    // Moons (27 particles)
+                    else {
+                        float orbitRadius = radius * (2.0 + aRandom.y);
+                        float angle = uTime * 0.3 + aRandom.x * 6.28318;
+                        float tilt = aRandom.z * 1.57;
+                        pos.x = orbitRadius * cos(angle);
+                        pos.y = orbitRadius * sin(angle) * sin(tilt);
+                        pos.z = orbitRadius * sin(angle) * cos(tilt);
+                        vColor = vec3(0.8, 0.9, 1.0);
+                    }
+                    
+                    // Tilted rotation (Uranus characteristic)
+                    float rotationAngle = uTime * 0.1;
+                    float cosR = cos(rotationAngle);
+                    float sinR = sin(rotationAngle);
+                    float y2 = pos.y * cosR - pos.z * sinR;
+                    float z2 = pos.y * sinR + pos.z * cosR;
+                    pos.y = y2;
+                    pos.z = z2;
+                    
+                    // Explosion
+                    if (uExpansion > 0.0) {
+                        vec3 explosionDir = normalize(pos) * 10.0;
+                        pos = mix(pos, pos + explosionDir, uExpansion);
+                    }
+                }
+                
+                vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
                 gl_Position = projectionMatrix * mvPosition;
-
+                
                 float dist = -mvPosition.z;
-                float dotSize = 25.0 * (1.0 + aRandom.z * 0.5); 
-                float photoSize = 350.0; 
-                float currentSize = mix(dotSize, photoSize, t);
+                float dotSize = 25.0 * (1.0 + aRandom.z * 0.5);
+                float photoSize = 350.0;
+                float currentSize = mix(dotSize, photoSize, uExpansion);
                 gl_PointSize = currentSize * (1.0 / dist);
                 
                 vUv = uv;
@@ -308,13 +415,15 @@
             }
         `;
 
-        const RITUAL_FRAG = `
+        const FRAGMENT_SHADER = `
             uniform sampler2D uTexture;
             uniform float uHasTexture;
-            
+            uniform int uShape;
+            uniform float uTime;
             varying float vExpansion;
             varying float vBrightness;
             varying vec4 vAtlasUV;
+            varying vec3 vColor;
 
             void main() {
                 vec2 uv = gl_PointCoord;
@@ -322,32 +431,32 @@
                 if (dist > 0.5) discard;
                 
                 float glow = 1.0 - (dist * 2.0);
-                glow = pow(glow, 2.5); 
+                glow = pow(glow, 2.5);
                 
-                vec3 amberColor = vec3(0.83, 0.68, 0.21); 
-                vec3 warmWhite = vec3(1.0, 0.95, 0.85);
-                vec3 dustColor = mix(amberColor, warmWhite, vBrightness);
-                vec4 colorDot = vec4(dustColor * 1.5, glow * 0.8); 
-
+                // Ice sparkle for Uranus
+                float sparkle = 1.0;
+                if (uShape == 2) {
+                    sparkle = sin(uTime * 5.0 + dist * 10.0) * 0.5 + 0.5;
+                }
+                
+                vec3 color = vColor * (0.8 + vBrightness * 0.4) * sparkle;
+                vec4 colorDot = vec4(color * 1.5, glow * 0.8);
+                
                 vec4 colorPhoto = vec4(0.0);
-                
                 if (uHasTexture > 0.5) {
                     vec2 photoUV = vec2(vAtlasUV.x + uv.x * vAtlasUV.z, vAtlasUV.y + uv.y * vAtlasUV.w);
                     colorPhoto = texture2D(uTexture, photoUV);
-                    
                     vec3 warmFilter = vec3(1.0, 0.95, 0.9);
                     colorPhoto.rgb = colorPhoto.rgb * warmFilter;
-
                     float border = 0.03;
                     if (uv.x < border || uv.x > 1.0 - border || uv.y < border || uv.y > 1.0 - border) {
-                        colorPhoto = vec4(0.9, 0.85, 0.8, 0.9); 
+                        colorPhoto = vec4(0.9, 0.85, 0.8, 0.9);
                     }
                 } else {
-                    colorPhoto = vec4(dustColor * 2.0, glow); 
+                    colorPhoto = vec4(color * 2.0, glow);
                 }
                 
                 float mixFactor = smoothstep(0.15, 0.7, vExpansion);
-                
                 if (uHasTexture < 0.5) {
                     gl_FragColor = colorDot;
                 } else {
@@ -358,9 +467,9 @@
             }
         `;
 
-        // Texture Atlas
+        // Texture Atlas (same as before)
         const createTextureAtlas = async (files, onProgress) => {
-            const size = 2048; 
+            const size = 2048;
             const canvas = document.createElement('canvas');
             canvas.width = size;
             canvas.height = size;
@@ -411,13 +520,18 @@
             return { texture, uvs };
         };
 
-        // PhotoTree Component with Default State
-        const PhotoTree = ({ atlasData, expansion, count }) => {
+        // PhotoTree Component with Shape Support
+        const PhotoTree = ({ atlasData, expansion, count, shape }) => {
             const shaderRef = useRef();
+            
+            // Shape index: tree=0, giftbox=1, uranus=2
+            const shapeIndex = shape === 'tree' ? 0 : shape === 'giftbox' ? 1 : 2;
             
             const { positions, randoms } = useMemo(() => {
                 const pos = new Float32Array(count * 3);
                 const rnd = new Float32Array(count * 3);
+                
+                // Tree shape (spiral)
                 const height = 14;
                 const radius = 3.5;
                 const loops = 7;
@@ -425,14 +539,14 @@
                 for (let i = 0; i < count; i++) {
                     const t = i / count;
                     const angle = t * loops * Math.PI * 2;
-                    const y = height * (0.5 - t); 
+                    const y = height * (0.5 - t);
                     const r = radius * t + (Math.random() - 0.5) * 0.5;
                     pos[i * 3] = Math.cos(angle) * r;
                     pos[i * 3 + 1] = y;
                     pos[i * 3 + 2] = Math.sin(angle) * r;
-                    rnd[i * 3] = Math.random(); 
-                    rnd[i * 3 + 1] = Math.random(); 
-                    rnd[i * 3 + 2] = Math.random(); 
+                    rnd[i * 3] = Math.random();
+                    rnd[i * 3 + 1] = Math.random();
+                    rnd[i * 3 + 2] = Math.random();
                 }
                 return { positions: pos, randoms: rnd };
             }, [count]);
@@ -453,6 +567,7 @@
             useFrame((state) => {
                 if (shaderRef.current) {
                     shaderRef.current.uniforms.uTime.value = state.clock.elapsedTime;
+                    shaderRef.current.uniforms.uShape.value = shapeIndex;
                     shaderRef.current.uniforms.uExpansion.value = THREE.MathUtils.lerp(
                         shaderRef.current.uniforms.uExpansion.value,
                         expansion,
@@ -480,10 +595,11 @@
                             uTime: { value: 0 },
                             uExpansion: { value: 0 },
                             uTexture: { value: null },
-                            uHasTexture: { value: 0.0 }
+                            uHasTexture: { value: 0.0 },
+                            uShape: { value: shapeIndex }
                         }}
-                        vertexShader={RITUAL_VERT}
-                        fragmentShader={RITUAL_FRAG}
+                        vertexShader={VERTEX_SHADER}
+                        fragmentShader={FRAGMENT_SHADER}
                         transparent={true}
                         depthWrite={false}
                         blending={THREE.AdditiveBlending}
@@ -492,7 +608,7 @@
             );
         };
 
-        // Hand Tracker
+        // Hand Tracker (same as before)
         const HandTracker = ({ onHandUpdate }) => {
             const videoRef = useRef(null);
             const smoothedOpenness = useRef(0);
@@ -560,9 +676,10 @@
             const [buildProgress, setBuildProgress] = useState(0);
             const [isBuilding, setIsBuilding] = useState(false);
             const [atlasData, setAtlasData] = useState(null);
+            const [shape, setShape] = useState('tree'); // NEW: Shape state
 
             useEffect(() => {
-                const timer = setTimeout(() => setIsWelcome(false), 5000); 
+                const timer = setTimeout(() => setIsWelcome(false), 5000);
                 return () => clearTimeout(timer);
             }, []);
 
@@ -582,6 +699,13 @@
 
             const currentExpansion = useCamera ? expansion : manualExpansion;
 
+            // Shape definitions
+            const shapes = [
+                { id: 'tree', icon: '🎄', name: 'Tree', subtitle: 'Classic', color: 'amber' },
+                { id: 'giftbox', icon: '🎁', name: 'Gift Box', subtitle: 'Surprise', color: 'amber' },
+                { id: 'uranus', icon: '🌀', name: 'Uranus', subtitle: 'Innovation', color: 'cyan' }
+            ];
+
             return (
                 <div className="w-full h-screen relative bg-coffee-900 overflow-hidden">
                     
@@ -589,9 +713,13 @@
                     <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-coffee-900 transition-opacity duration-[2000ms] ${isWelcome ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                         <h1 className="font-ritual text-5xl md:text-7xl text-amber-glow tracking-widest mb-4 animate-pulse text-center">
                             N43 RITUAL<br/>
-                            <span className="text-xl md:text-2xl font-ui font-light text-amber-dim mt-2 block" style={{letterSpacing: '0.2em', opacity: 0.6}}>年度儀式</span>
+                            <span className="text-xl md:text-2xl font-ui font-light text-amber-dim mt-2 block" style={{letterSpacing: '0.2em', opacity: 0.6}}>Christmas Special</span>
                         </h1>
-                        <p className="font-ritual text-stone-400 text-lg italic mt-4">
+                        <p className="font-ritual text-stone-400 text-lg italic mt-4 text-center" style={{maxWidth: '28rem'}}>
+                            Not every year has photos.<br/>
+                            But every year deserves a ritual.
+                        </p>
+                        <p className="font-ui text-xs text-stone-500 mt-6 tracking-wide">
                             Curated by Kelly Hung
                         </p>
                     </div>
@@ -603,9 +731,9 @@
                         <color attach="background" args={['#0c0a09']} />
                         <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.5} />
                         <ambientLight intensity={0.4} color="#8B5E3C" />
-                        <pointLight position={[10, 10, 10]} intensity={0.8} color="#D4AF37" />
-                        <PhotoTree atlasData={atlasData} expansion={currentExpansion} count={150} />
-                        <Sparkles count={80} scale={15} size={2} speed={0.2} opacity={0.3} color="#D4AF37" />
+                        <pointLight position={[10, 10, 10]} intensity={0.8} color={shape === 'uranus' ? '#4FD1C5' : '#D4AF37'} />
+                        <PhotoTree atlasData={atlasData} expansion={currentExpansion} count={180} shape={shape} />
+                        <Sparkles count={80} scale={15} size={2} speed={0.2} opacity={0.3} color={shape === 'uranus' ? '#4FD1C5' : '#D4AF37'} />
                     </Canvas>
 
                     {/* Header */}
@@ -616,8 +744,8 @@
                                 <span className="font-ui text-sm md:text-base text-amber-dim font-light tracking-wide">聖誕回憶</span>
                             </h2>
                             <div className="font-ui text-10px md:text-xs text-stone-500 mt-2 tracking-wider uppercase border-l-2 border-stone-800 pl-2">
-                                <p>Annual Ritual v1.1</p>
-                                <p className="mt-0.5" style={{color: 'rgba(139, 94, 60, 0.8)'}}>Curated by Kelly Hung · Nirvana Finance Buddy</p>
+                                <p>Annual Ritual v1.2 Christmas Special</p>
+                                <p className="mt-0.5" style={{color: 'rgba(139, 94, 60, 0.8)'}}>Curated by Kelly Hung</p>
                             </div>
                         </div>
                     </div>
@@ -635,15 +763,41 @@
                             </div>
                         )}
 
-                        <div className="mb-5">
-                            <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2 flex justify-between">
-                                <span>1. Collect Fragments</span>
-                                <span className="text-stone-600">收集碎片</span>
+                        {/* Shape Selector */}
+                        <div className="mb-4">
+                            <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2">
+                                Particle Shape / 粒子形狀
+                            </label>
+                            <div className="grid grid-cols-3 gap-2">
+                                {shapes.map(s => (
+                                    <button
+                                        key={s.id}
+                                        onClick={() => setShape(s.id)}
+                                        className={`border rounded-lg p-2 transition-all ${
+                                            shape === s.id
+                                                ? s.color === 'cyan' 
+                                                    ? 'border-cyan-glow bg-cyan-glow\/10' 
+                                                    : 'border-amber-glow bg-amber-glow\/10'
+                                                : 'border-stone-700 hover:border-stone-500'
+                                        }`}
+                                    >
+                                        <div className="text-2xl mb-1">{s.icon}</div>
+                                        <div className="text-xs font-bold">{s.name}</div>
+                                        <div className="text-9px text-stone-600">{s.subtitle}</div>
+                                    </button>
+                                ))}
+                            </div>
+                        </div>
+
+                        {/* Upload */}
+                        <div className="mb-4">
+                            <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2">
+                                Photos (Optional) / 照片（可選）
                             </label>
                             <label className="cursor-pointer group flex items-center justify-between border border-stone-600 rounded px-4 py-3 hover:border-amber-glow transition-colors bg-stone-900\/50">
                                 <div className="flex flex-col">
                                     <span className="text-stone-300 text-sm group-hover:text-amber-glow transition-colors">
-                                        {images.length > 0 ? `${images.length} Photos Selected` : "Upload Photos"}
+                                        {images.length > 0 ? `${images.length} Photos Added` : "Upload Photos"}
                                     </span>
                                     <span className="text-10px text-stone-500 group-hover:text-amber-dim">
                                         {images.length > 0 ? `${images.length} 張照片已選` : "上傳照片"}
@@ -653,29 +807,28 @@
                                 <div className="w-2 h-2 rounded-full bg-amber-glow opacity-50 group-hover:opacity-100"></div>
                             </label>
                             <p className="text-9px text-stone-500 mt-2 text-center italic">
-                                Choose what truly mattered. (12 fragments recommended) <br/>
-                                選擇真正重要的回憶。（建議 12 張）
+                                Even without photos, unfold your year.
                             </p>
                         </div>
 
+                        {/* Controls */}
                         <div>
-                            <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2 flex justify-between">
-                                <span>2. The Ritual</span>
-                                <span className="text-stone-600">儀式開始</span>
+                            <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2">
+                                Control / 控制
                             </label>
-                            <div className="flex gap-2 mb-4">
+                            <div className="flex gap-2 mb-3">
                                 <button 
                                     onClick={() => setUseCamera(false)}
-                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${!useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow\/5' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
-                                    style={!useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212, 175, 55, 0.05)'} : {}}
+                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${!useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow\/10' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
+                                    style={!useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212, 175, 55, 0.1)'} : {}}
                                 >
                                     <span className="text-xs font-bold tracking-wider uppercase">Slider</span>
                                     <span className="text-9px opacity-70">滑桿</span>
                                 </button>
                                 <button 
                                     onClick={() => setUseCamera(true)}
-                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow\/5' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
-                                    style={useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212, 175, 55, 0.05)'} : {}}
+                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow\/10' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
+                                    style={useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212, 175, 55, 0.1)'} : {}}
                                 >
                                     <span className="text-xs font-bold tracking-wider uppercase">Camera</span>
                                     <span className="text-9px opacity-70">相機</span>
@@ -690,15 +843,26 @@
                                 />
                             </div>
                             
-                            <div className="mt-4 text-center">
-                                <p className="font-ritual text-stone-400 text-lg italic leading-tight">
+                            <div className="mt-3 text-center">
+                                <p className="font-ritual text-stone-400 text-sm italic leading-tight">
                                     {useCamera ? "Open your hand to reveal..." : "Slide to unfold..."}
                                 </p>
                                 <p className="font-ui text-stone-600 text-xs mt-1">
-                                    {useCamera ? "張開手掌，展現回憶..." : "滑動展開..."}
+                                    {useCamera ? "張開手掌展現" : "滑動展開"}
                                 </p>
                             </div>
                         </div>
+
+                        {/* Hand Gesture Guide */}
+                        <details className="mt-4 text-xs text-stone-500 border border-stone-700 rounded p-2">
+                            <summary className="cursor-pointer text-amber-glow font-bold">
+                                👋 Hand Gesture Guide / 手勢指南
+                            </summary>
+                            <ul className="mt-2 space-y-1 text-10px">
+                                <li>✋ <span className="text-stone-400">Open Palm</span> → Scatter / 散開</li>
+                                <li>✊ <span className="text-stone-400">Closed Fist</span> → Gather / 聚合</li>
+                            </ul>
+                        </details>
                     </div>
                     
                     {/* Footer */}
