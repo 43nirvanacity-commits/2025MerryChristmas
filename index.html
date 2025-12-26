@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     
-    <!-- Branding Anchors -->
+    <!-- Branding -->
     <title>Christmas Memories · N43 Ritual</title>
-    <meta name="description" content="Christmas Memories. Annual Ritual v1.0. Curated by Kelly Hung · Nirvana Finance Buddy. © NirvanaCity">
+    <meta name="description" content="Christmas Memories. Annual Ritual v1.1. Curated by Kelly Hung · Nirvana Finance Buddy. © NirvanaCity">
     <meta name="author" content="Kelly Hung">
     
     <!-- Fonts -->
@@ -14,46 +14,48 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Inter:wght@300;400;600&family=Noto+Sans+TC:wght@300;400&display=swap" rel="stylesheet">
 
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        'ritual': ['"Cormorant Garamond"', 'serif'],
-                        'ui': ['"Inter"', '"Noto Sans TC"', 'sans-serif'],
-                    },
-                    colors: {
-                        coffee: { 900: '#1C1917' },
-                        amber: { glow: '#D4AF37', dim: '#8B5E3C' }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Tools -->
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script type="importmap">
-        {
-            "imports": {
-                "react": "https://esm.sh/react@18.2.0",
-                "react-dom/client": "https://esm.sh/react-dom@18.2.0/client",
-                "three": "https://esm.sh/three@0.160.0",
-                "@react-three/fiber": "https://esm.sh/@react-three/fiber@8.15.14?external=react,react-dom,three",
-                "@react-three/drei": "https://esm.sh/@react-three/drei@9.96.1?external=react,react-dom,three,@react-three/fiber",
-                "uuid": "https://esm.sh/uuid@9.0.1",
-                "@mediapipe/hands": "https://esm.sh/@mediapipe/hands@0.4.1675469240"
-            }
-        }
-    </script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
-
     <style>
-        body { margin: 0; overflow: hidden; background-color: #0c0a09; color: #e7e5e4; font-family: 'Inter', sans-serif; }
+        /* Reset */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        /* Base */
+        body { 
+            overflow: hidden; 
+            background-color: #0c0a09; 
+            color: #e7e5e4; 
+            font-family: 'Inter', 'Noto Sans TC', sans-serif;
+        }
+        
         canvas { touch-action: none; }
+        ::-webkit-scrollbar { width: 0; background: transparent; }
+        
+        /* Fonts */
+        .font-ritual { font-family: 'Cormorant Garamond', serif; }
+        .font-ui { font-family: 'Inter', 'Noto Sans TC', sans-serif; }
+        
+        /* Colors */
+        .text-amber-glow { color: #D4AF37; }
+        .text-amber-dim { color: #8B5E3C; }
+        .text-stone-300 { color: #d6d3d1; }
+        .text-stone-400 { color: #a8a29e; }
+        .text-stone-500 { color: #78716c; }
+        .text-stone-600 { color: #57534e; }
+        .text-stone-700 { color: #44403c; }
+        .bg-coffee-900 { background-color: #0c0a09; }
+        .bg-stone-900\/50 { background-color: rgba(28, 25, 23, 0.5); }
+        .bg-stone-700 { background-color: #44403c; }
+        .bg-amber-glow { background-color: #D4AF37; }
+        .border-amber-glow { border-color: #D4AF37; }
+        .border-stone-600 { border-color: #57534e; }
+        .border-stone-700 { border-color: #44403c; }
+        .border-stone-800 { border-color: #292524; }
+        .bg-amber-glow\/5 { background-color: rgba(212, 175, 55, 0.05); }
+        .opacity-30 { opacity: 0.3; }
+        .opacity-50 { opacity: 0.5; }
+        .opacity-70 { opacity: 0.7; }
+        .opacity-100 { opacity: 1; }
+        
+        /* Glass Panel */
         .glass-panel {
             background: rgba(28, 25, 23, 0.6);
             backdrop-filter: blur(12px);
@@ -61,26 +63,209 @@
             border-radius: 4px;
             box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
         }
+        
+        /* Animations */
+        @keyframes shimmer {
+            0% { background-position: -100% 0; }
+            100% { background-position: 100% 0; }
+        }
+        
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        
+        .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+        
         .loading-bar {
             background: linear-gradient(90deg, #44403c 25%, #78716c 50%, #44403c 75%);
             background-size: 200% 100%;
             animation: shimmer 2s infinite linear;
         }
-        @keyframes shimmer { 0% { background-position: -100% 0; } 100% { background-position: 100% 0; } }
-        ::-webkit-scrollbar { width: 0px; background: transparent; }
+        
+        /* Layout */
+        .w-full { width: 100%; }
+        .h-screen { height: 100vh; }
+        .w-24 { width: 6rem; }
+        .h-16 { height: 4rem; }
+        .w-32 { width: 8rem; }
+        .h-1 { height: 0.25rem; }
+        .w-2 { width: 0.5rem; }
+        .h-2 { height: 0.5rem; }
+        
+        .relative { position: relative; }
+        .absolute { position: absolute; }
+        .fixed { position: fixed; }
+        .inset-0 { inset: 0; }
+        .top-0 { top: 0; }
+        .left-0 { left: 0; }
+        .right-6 { right: 1.5rem; }
+        .bottom-2 { bottom: 0.5rem; }
+        .bottom-4 { bottom: 1rem; }
+        .bottom-8 { bottom: 2rem; }
+        .left-6 { left: 1.5rem; }
+        .right-4 { right: 1rem; }
+        
+        .z-10 { z-index: 10; }
+        .z-50 { z-index: 50; }
+        
+        /* Flexbox */
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .flex-1 { flex: 1; }
+        .items-start { align-items: flex-start; }
+        .items-center { align-items: center; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-0\.5 { gap: 0.125rem; }
+        .gap-2 { gap: 0.5rem; }
+        
+        /* Spacing */
+        .p-5 { padding: 1.25rem; }
+        .p-6 { padding: 1.5rem; }
+        .p-8 { padding: 2rem; }
+        .px-4 { padding-left: 1rem; padding-right: 1rem; }
+        .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
+        .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+        .pl-2 { padding-left: 0.5rem; }
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-5 { margin-bottom: 1.25rem; }
+        .mt-0\.5 { margin-top: 0.125rem; }
+        .mt-1 { margin-top: 0.25rem; }
+        .mt-2 { margin-top: 0.5rem; }
+        .mt-4 { margin-top: 1rem; }
+        
+        /* Text */
+        .text-9px { font-size: 9px; }
+        .text-10px { font-size: 10px; }
+        .text-xs { font-size: 0.75rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-base { font-size: 1rem; }
+        .text-lg { font-size: 1.125rem; }
+        .text-xl { font-size: 1.25rem; }
+        .text-2xl { font-size: 1.5rem; }
+        .text-3xl { font-size: 1.875rem; }
+        .text-5xl { font-size: 3rem; }
+        .text-7xl { font-size: 4.5rem; }
+        .text-center { text-align: center; }
+        .italic { font-style: italic; }
+        .font-light { font-weight: 300; }
+        .font-bold { font-weight: 700; }
+        .uppercase { text-transform: uppercase; }
+        .tracking-wide { letter-spacing: 0.025em; }
+        .tracking-wider { letter-spacing: 0.05em; }
+        .tracking-widest { letter-spacing: 0.1em; }
+        .leading-none { line-height: 1; }
+        .leading-tight { line-height: 1.25; }
+        
+        /* Borders */
+        .border { border-width: 1px; }
+        .border-2 { border-width: 2px; }
+        .border-l-2 { border-left-width: 2px; }
+        .rounded { border-radius: 0.25rem; }
+        .rounded-full { border-radius: 9999px; }
+        
+        /* Effects */
+        .drop-shadow-md { filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07)); }
+        .overflow-hidden { overflow: hidden; }
+        .pointer-events-none { pointer-events: none; }
+        .cursor-pointer { cursor: pointer; }
+        .object-cover { object-fit: cover; }
+        .hidden { display: none; }
+        .block { display: block; }
+        
+        /* Transforms */
+        .transform { transform: translateZ(0); }
+        .scale-x-\[-1\] { transform: scaleX(-1); }
+        .translate-y-0 { transform: translateY(0); }
+        .translate-y-20 { transform: translateY(5rem); }
+        
+        /* Transitions */
+        .transition-opacity { transition: opacity 0.3s; }
+        .transition-transform { transition: transform 0.3s; }
+        .transition-colors { transition: color 0.3s, border-color 0.3s, background-color 0.3s; }
+        .transition-all { transition: all 0.3s; }
+        .duration-500 { transition-duration: 500ms; }
+        .duration-1000 { transition-duration: 1000ms; }
+        .duration-\[2000ms\] { transition-duration: 2000ms; }
+        
+        /* Visibility */
+        .opacity-0 { opacity: 0; }
+        
+        /* Interactive */
+        input[type="file"] { display: none; }
+        
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 0.25rem;
+            border-radius: 0.5rem;
+            background: #44403c;
+            outline: none;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: #D4AF37;
+            cursor: pointer;
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background: #D4AF37;
+            cursor: pointer;
+            border: none;
+        }
+        
+        /* Hover states */
+        .group:hover .group-hover\:text-amber-glow { color: #D4AF37; }
+        .group:hover .group-hover\:text-amber-dim { color: #8B5E3C; }
+        .group:hover .group-hover\:opacity-100 { opacity: 1; }
+        
+        button:hover .hover\:text-stone-300 { color: #d6d3d1; }
+        .hover\:border-amber-glow:hover { border-color: #D4AF37; }
+        
+        /* Responsive */
+        @media (min-width: 768px) {
+            .md\:text-7xl { font-size: 4.5rem; }
+            .md\:text-3xl { font-size: 1.875rem; }
+            .md\:text-2xl { font-size: 1.5rem; }
+            .md\:text-base { font-size: 1rem; }
+            .md\:text-xs { font-size: 0.75rem; }
+            .md\:p-8 { padding: 2rem; }
+            .md\:w-80 { width: 20rem; }
+            .md\:right-auto { right: auto; }
+            .md\:flex-row { flex-direction: row; }
+        }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
-    <script type="text/babel" data-type="module" data-presets="react">
-        import React, { useState, useEffect, useRef, useMemo, Suspense } from 'react';
-        import { createRoot } from 'react-dom/client';
-        import * as THREE from 'three';
-        import { Canvas, useFrame, useThree } from '@react-three/fiber';
-        import { OrbitControls, PerspectiveCamera, Stars, Sparkles } from '@react-three/drei';
-        
-        // --- Shaders (Updated for Default Mode) ---
+    <!-- MediaPipe -->
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1675469240/camera_utils.min.js"></script>
+    
+    <!-- Babel -->
+    <script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
+
+    <!-- React & Three.js UMD -->
+    <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
+    <script src="https://unpkg.com/@react-three/fiber@8.15.12/dist/react-three-fiber.umd.js"></script>
+    <script src="https://unpkg.com/@react-three/drei@9.88.0/dist/drei.umd.js"></script>
+
+    <script type="text/babel">
+        const { useState, useEffect, useRef, useMemo } = React;
+        const { Canvas, useFrame } = window.ReactThreeFiber;
+        const { OrbitControls, PerspectiveCamera, Stars, Sparkles } = window.drei;
+
+        // Shaders with Default State Support
         const RITUAL_VERT = `
             uniform float uTime;
             uniform float uExpansion; 
@@ -96,16 +281,12 @@
                 vExpansion = uExpansion;
                 vec3 pos = position;
                 
-                // Breath
                 float breathe = sin(uTime * 1.5 + pos.y * 0.5) * 0.08 * (1.0 - uExpansion);
-                
-                // Explosion
                 vec3 explodeDir = normalize(pos) * 12.0; 
                 vec3 spiralPos = pos + normal * breathe;
                 
                 float t = smoothstep(0.0, 1.0, uExpansion);
                 
-                // Drift
                 vec3 drift = vec3(
                     sin(uTime * 0.5 + aRandom.x * 10.0),
                     cos(uTime * 0.3 + aRandom.y * 10.0),
@@ -116,7 +297,6 @@
                 vec4 mvPosition = modelViewMatrix * vec4(finalPos, 1.0);
                 gl_Position = projectionMatrix * mvPosition;
 
-                // Size
                 float dist = -mvPosition.z;
                 float dotSize = 25.0 * (1.0 + aRandom.z * 0.5); 
                 float photoSize = 350.0; 
@@ -130,7 +310,7 @@
 
         const RITUAL_FRAG = `
             uniform sampler2D uTexture;
-            uniform float uHasTexture; // 0.0 or 1.0
+            uniform float uHasTexture;
             
             varying float vExpansion;
             varying float vBrightness;
@@ -139,8 +319,6 @@
             void main() {
                 vec2 uv = gl_PointCoord;
                 float dist = length(uv - 0.5);
-                
-                // --- Mode A: Dust / Default Glow ---
                 if (dist > 0.5) discard;
                 
                 float glow = 1.0 - (dist * 2.0);
@@ -148,12 +326,9 @@
                 
                 vec3 amberColor = vec3(0.83, 0.68, 0.21); 
                 vec3 warmWhite = vec3(1.0, 0.95, 0.85);
-                
-                // If no texture, we use a more "magical" color for the expanded state
                 vec3 dustColor = mix(amberColor, warmWhite, vBrightness);
                 vec4 colorDot = vec4(dustColor * 1.5, glow * 0.8); 
 
-                // --- Mode B: Photo ---
                 vec4 colorPhoto = vec4(0.0);
                 
                 if (uHasTexture > 0.5) {
@@ -168,16 +343,13 @@
                         colorPhoto = vec4(0.9, 0.85, 0.8, 0.9); 
                     }
                 } else {
-                    // Default State: Just bigger, brighter dots
                     colorPhoto = vec4(dustColor * 2.0, glow); 
                 }
                 
-                // Mixing
                 float mixFactor = smoothstep(0.15, 0.7, vExpansion);
                 
-                // If no texture, we just stay as dots but maybe get brighter
                 if (uHasTexture < 0.5) {
-                    gl_FragColor = colorDot; // Keep as dots, logic handled in Vertex size
+                    gl_FragColor = colorDot;
                 } else {
                     vec4 finalColor = mix(colorDot, colorPhoto, mixFactor);
                     finalColor.a = mix(glow, 1.0, mixFactor);
@@ -186,7 +358,7 @@
             }
         `;
 
-        // --- Helper: Texture Atlas ---
+        // Texture Atlas
         const createTextureAtlas = async (files, onProgress) => {
             const size = 2048; 
             const canvas = document.createElement('canvas');
@@ -239,7 +411,7 @@
             return { texture, uvs };
         };
 
-        // --- Tree Component ---
+        // PhotoTree Component with Default State
         const PhotoTree = ({ atlasData, expansion, count }) => {
             const shaderRef = useRef();
             
@@ -320,7 +492,7 @@
             );
         };
 
-        // --- Hand Tracking ---
+        // Hand Tracker
         const HandTracker = ({ onHandUpdate }) => {
             const videoRef = useRef(null);
             const smoothedOpenness = useRef(0);
@@ -369,13 +541,16 @@
                     }
                 };
                 initMediaPipe();
-                return () => { if (camera) camera.stop(); if (hands) hands.close(); };
+                return () => { 
+                    if (camera) try { camera.stop(); } catch(e) {}
+                    if (hands) try { hands.close(); } catch(e) {}
+                };
             }, []);
 
-            return <video ref={videoRef} className="fixed bottom-4 right-4 w-24 h-16 object-cover rounded border border-amber-glow/20 opacity-30 pointer-events-none transform scale-x-[-1] z-50" playsInline muted />;
+            return <video ref={videoRef} className="fixed bottom-4 right-4 w-24 h-16 object-cover rounded border opacity-30 pointer-events-none transform scale-x-[-1] z-50" style={{borderColor: 'rgba(212, 175, 55, 0.2)'}} playsInline muted />;
         };
 
-        // --- Main App ---
+        // Main App
         const App = () => {
             const [images, setImages] = useState([]);
             const [expansion, setExpansion] = useState(0);
@@ -414,7 +589,7 @@
                     <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-coffee-900 transition-opacity duration-[2000ms] ${isWelcome ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                         <h1 className="font-ritual text-5xl md:text-7xl text-amber-glow tracking-widest mb-4 animate-pulse text-center">
                             N43 RITUAL<br/>
-                            <span className="text-xl md:text-2xl font-ui font-light tracking-[0.2em] text-amber-glow/60 mt-2 block">年度儀式</span>
+                            <span className="text-xl md:text-2xl font-ui font-light text-amber-dim mt-2 block" style={{letterSpacing: '0.2em', opacity: 0.6}}>年度儀式</span>
                         </h1>
                         <p className="font-ritual text-stone-400 text-lg italic mt-4">
                             Curated by Kelly Hung
@@ -429,31 +604,29 @@
                         <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.5} />
                         <ambientLight intensity={0.4} color="#8B5E3C" />
                         <pointLight position={[10, 10, 10]} intensity={0.8} color="#D4AF37" />
-                        <Suspense fallback={null}>
-                            <PhotoTree atlasData={atlasData} expansion={currentExpansion} count={150} />
-                        </Suspense>
+                        <PhotoTree atlasData={atlasData} expansion={currentExpansion} count={150} />
                         <Sparkles count={80} scale={15} size={2} speed={0.2} opacity={0.3} color="#D4AF37" />
                     </Canvas>
 
-                    {/* Branding: Header Signature (Optimized for Mobile) */}
+                    {/* Header */}
                     <div className={`absolute top-0 left-0 w-full p-6 md:p-8 transition-opacity duration-1000 flex flex-col md:flex-row justify-between items-start pointer-events-none ${isWelcome ? 'opacity-0' : 'opacity-100'}`}>
                         <div>
                             <h2 className="font-ritual text-2xl md:text-3xl text-amber-glow drop-shadow-md leading-none">
                                 Christmas Memories<br/>
                                 <span className="font-ui text-sm md:text-base text-amber-dim font-light tracking-wide">聖誕回憶</span>
                             </h2>
-                            <div className="font-ui text-[10px] md:text-xs text-stone-500 mt-2 tracking-wider uppercase border-l-2 border-stone-800 pl-2">
+                            <div className="font-ui text-10px md:text-xs text-stone-500 mt-2 tracking-wider uppercase border-l-2 border-stone-800 pl-2">
                                 <p>Annual Ritual v1.1</p>
-                                <p className="text-amber-dim/80 mt-0.5">Curated by Kelly Hung · Nirvana Finance Buddy</p>
+                                <p className="mt-0.5" style={{color: 'rgba(139, 94, 60, 0.8)'}}>Curated by Kelly Hung · Nirvana Finance Buddy</p>
                             </div>
                         </div>
                     </div>
 
                     {/* Control Panel */}
-                    <div className={`absolute bottom-8 left-6 right-6 md:right-auto md:w-80 glass-panel p-5 transition-transform duration-1000 ${isWelcome ? 'translate-y-20 opacity-0' : 'translate-y-0 opacity-100'}`}>
+                    <div className={`absolute bottom-8 left-6 right-6 glass-panel p-5 transition-transform duration-1000 ${isWelcome ? 'translate-y-20 opacity-0' : 'translate-y-0 opacity-100'}`} style={{width: window.innerWidth >= 768 ? '20rem' : 'calc(100% - 3rem)'}}>
                         
                         {isBuilding && (
-                            <div className="absolute inset-0 z-10 bg-coffee-900/95 flex flex-col items-center justify-center rounded">
+                            <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded" style={{backgroundColor: 'rgba(12, 10, 9, 0.95)'}}>
                                 <span className="font-ritual text-amber-glow text-xl mb-1">Weaving...</span>
                                 <span className="font-ui text-stone-500 text-xs mb-2">編織中...</span>
                                 <div className="w-32 h-1 bg-stone-700 rounded overflow-hidden">
@@ -462,49 +635,50 @@
                             </div>
                         )}
 
-                        {/* Upload */}
                         <div className="mb-5">
-                            <label className="block font-ui text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-2 flex justify-between">
+                            <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2 flex justify-between">
                                 <span>1. Collect Fragments</span>
                                 <span className="text-stone-600">收集碎片</span>
                             </label>
-                            <label className="cursor-pointer group flex items-center justify-between border border-stone-600 rounded px-4 py-3 hover:border-amber-glow transition-colors bg-stone-900/50">
+                            <label className="cursor-pointer group flex items-center justify-between border border-stone-600 rounded px-4 py-3 hover:border-amber-glow transition-colors bg-stone-900\/50">
                                 <div className="flex flex-col">
                                     <span className="text-stone-300 text-sm group-hover:text-amber-glow transition-colors">
                                         {images.length > 0 ? `${images.length} Photos Selected` : "Upload Photos"}
                                     </span>
-                                    <span className="text-[10px] text-stone-500 group-hover:text-amber-dim">
+                                    <span className="text-10px text-stone-500 group-hover:text-amber-dim">
                                         {images.length > 0 ? `${images.length} 張照片已選` : "上傳照片"}
                                     </span>
                                 </div>
-                                <input type="file" multiple accept="image/*" onChange={handleUpload} className="hidden" />
+                                <input type="file" multiple accept="image/*" onChange={handleUpload} />
                                 <div className="w-2 h-2 rounded-full bg-amber-glow opacity-50 group-hover:opacity-100"></div>
                             </label>
-                            <p className="text-[9px] text-stone-500 mt-2 text-center italic">
+                            <p className="text-9px text-stone-500 mt-2 text-center italic">
                                 Choose what truly mattered. (12 fragments recommended) <br/>
                                 選擇真正重要的回憶。（建議 12 張）
                             </p>
                         </div>
 
                         <div>
-                            <label className="block font-ui text-[10px] font-bold uppercase tracking-widest text-stone-400 mb-2 flex justify-between">
+                            <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2 flex justify-between">
                                 <span>2. The Ritual</span>
                                 <span className="text-stone-600">儀式開始</span>
                             </label>
                             <div className="flex gap-2 mb-4">
                                 <button 
                                     onClick={() => setUseCamera(false)}
-                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${!useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow/5' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
+                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${!useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow\/5' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
+                                    style={!useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212, 175, 55, 0.05)'} : {}}
                                 >
                                     <span className="text-xs font-bold tracking-wider uppercase">Slider</span>
-                                    <span className="text-[9px] opacity-70">滑桿</span>
+                                    <span className="text-9px opacity-70">滑桿</span>
                                 </button>
                                 <button 
                                     onClick={() => setUseCamera(true)}
-                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow/5' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
+                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow\/5' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
+                                    style={useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212, 175, 55, 0.05)'} : {}}
                                 >
                                     <span className="text-xs font-bold tracking-wider uppercase">Camera</span>
-                                    <span className="text-[9px] opacity-70">相機</span>
+                                    <span className="text-9px opacity-70">相機</span>
                                 </button>
                             </div>
 
@@ -513,7 +687,6 @@
                                     type="range" min="0" max="1" step="0.001" 
                                     value={manualExpansion}
                                     onChange={(e) => setManualExpansion(parseFloat(e.target.value))}
-                                    className="w-full accent-[#D4AF37] h-1 bg-stone-700 rounded-lg appearance-none cursor-pointer"
                                 />
                             </div>
                             
@@ -528,9 +701,9 @@
                         </div>
                     </div>
                     
-                    {/* Footer Signature (Copyright only) */}
+                    {/* Footer */}
                     <div className={`absolute bottom-2 w-full text-center pointer-events-none transition-opacity duration-1000 ${isWelcome ? 'opacity-0' : 'opacity-100'}`}>
-                        <p className="font-ui text-[9px] text-stone-700 tracking-widest uppercase">
+                        <p className="font-ui text-9px text-stone-700 tracking-widest uppercase">
                             © NirvanaCity
                         </p>
                     </div>
@@ -540,7 +713,7 @@
             );
         };
 
-        const root = createRoot(document.getElementById('root'));
+        const root = ReactDOM.createRoot(document.getElementById('root'));
         root.render(<App />);
     </script>
 </body>
