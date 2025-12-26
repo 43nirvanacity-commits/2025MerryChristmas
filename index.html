@@ -5,8 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     
     <!-- Branding -->
-    <title>Christmas Memories · N43 Ritual</title>
-    <meta name="description" content="Christmas Memories. Annual Ritual v1.2 Christmas Special. Curated by Kelly Hung · Nirvana Finance Buddy. © NirvanaCity">
+    <title>Christmas Memories · N43 Ritual Complete</title>
+    <meta name="description" content="Christmas Memories. Annual Ritual v2.0 Complete Edition. Curated by Kelly Hung · Nirvana Finance Buddy. © NirvanaCity">
     <meta name="author" content="Kelly Hung">
     
     <!-- Fonts -->
@@ -35,29 +35,26 @@
         
         /* Colors */
         .text-amber-glow { color: #D4AF37; }
-        .text-amber-dim { color: #8B5E3C; }
+        .text-red-glow { color: #EF4444; }
         .text-cyan-glow { color: #4FD1C5; }
+        .text-purple-glow { color: #A78BFA; }
         .text-stone-300 { color: #d6d3d1; }
         .text-stone-400 { color: #a8a29e; }
         .text-stone-500 { color: #78716c; }
         .text-stone-600 { color: #57534e; }
         .text-stone-700 { color: #44403c; }
         .bg-coffee-900 { background-color: #0c0a09; }
-        .bg-stone-900\/50 { background-color: rgba(28, 25, 23, 0.5); }
-        .bg-stone-700 { background-color: #44403c; }
-        .bg-amber-glow { background-color: #D4AF37; }
         .border-amber-glow { border-color: #D4AF37; }
+        .border-red-glow { border-color: #EF4444; }
         .border-cyan-glow { border-color: #4FD1C5; }
+        .border-purple-glow { border-color: #A78BFA; }
         .border-stone-600 { border-color: #57534e; }
         .border-stone-700 { border-color: #44403c; }
         .border-stone-800 { border-color: #292524; }
         .bg-amber-glow\/10 { background-color: rgba(212, 175, 55, 0.1); }
+        .bg-red-glow\/10 { background-color: rgba(239, 68, 68, 0.1); }
         .bg-cyan-glow\/10 { background-color: rgba(79, 209, 197, 0.1); }
-        .opacity-30 { opacity: 0.3; }
-        .opacity-50 { opacity: 0.5; }
-        .opacity-60 { opacity: 0.6; }
-        .opacity-70 { opacity: 0.7; }
-        .opacity-100 { opacity: 1; }
+        .bg-purple-glow\/10 { background-color: rgba(167, 139, 250, 0.1); }
         
         /* Glass Panel */
         .glass-panel {
@@ -69,93 +66,62 @@
         }
         
         /* Animations */
-        @keyframes shimmer {
-            0% { background-position: -100% 0; }
-            100% { background-position: 100% 0; }
-        }
-        
+        @keyframes shimmer { 0% { background-position: -100% 0; } 100% { background-position: 100% 0; } }
         @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
         
         .animate-pulse { animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
-        
         .loading-bar {
             background: linear-gradient(90deg, #44403c 25%, #78716c 50%, #44403c 75%);
             background-size: 200% 100%;
             animation: shimmer 2s infinite linear;
         }
         
-        /* Layout */
+        /* Layout utilities (same as before) */
         .w-full { width: 100%; }
         .h-screen { height: 100vh; }
-        .w-24 { width: 6rem; }
-        .h-16 { height: 4rem; }
-        .w-32 { width: 8rem; }
-        .h-1 { height: 0.25rem; }
-        .w-2 { width: 0.5rem; }
-        .h-2 { height: 0.5rem; }
-        
         .relative { position: relative; }
         .absolute { position: absolute; }
         .fixed { position: fixed; }
         .inset-0 { inset: 0; }
         .top-0 { top: 0; }
         .left-0 { left: 0; }
-        .right-6 { right: 1.5rem; }
         .bottom-2 { bottom: 0.5rem; }
         .bottom-4 { bottom: 1rem; }
         .bottom-8 { bottom: 2rem; }
         .left-6 { left: 1.5rem; }
         .right-4 { right: 1rem; }
-        
+        .right-6 { right: 1.5rem; }
         .z-10 { z-index: 10; }
         .z-50 { z-index: 50; }
-        
-        /* Flexbox */
         .flex { display: flex; }
         .flex-col { flex-direction: column; }
-        .flex-1 { flex: 1; }
-        .items-start { align-items: flex-start; }
         .items-center { align-items: center; }
         .justify-center { justify-content: center; }
-        .justify-between { justify-content: space-between; }
-        .gap-0\.5 { gap: 0.125rem; }
-        .gap-1 { gap: 0.25rem; }
         .gap-2 { gap: 0.5rem; }
-        
-        /* Grid */
         .grid { display: grid; }
+        .grid-cols-2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
         .grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-        
-        /* Spacing */
         .p-2 { padding: 0.5rem; }
-        .p-3 { padding: 0.75rem; }
         .p-5 { padding: 1.25rem; }
         .p-6 { padding: 1.5rem; }
-        .p-8 { padding: 2rem; }
         .px-4 { padding-left: 1rem; padding-right: 1rem; }
         .py-2 { padding-top: 0.5rem; padding-bottom: 0.5rem; }
         .py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
         .pl-2 { padding-left: 0.5rem; }
         .mb-1 { margin-bottom: 0.25rem; }
         .mb-2 { margin-bottom: 0.5rem; }
-        .mb-3 { margin-bottom: 0.75rem; }
         .mb-4 { margin-bottom: 1rem; }
         .mb-5 { margin-bottom: 1.25rem; }
-        .mt-0\.5 { margin-top: 0.125rem; }
         .mt-1 { margin-top: 0.25rem; }
         .mt-2 { margin-top: 0.5rem; }
         .mt-4 { margin-top: 1rem; }
-        
-        /* Text */
         .text-9px { font-size: 9px; }
         .text-10px { font-size: 10px; }
         .text-xs { font-size: 0.75rem; }
         .text-sm { font-size: 0.875rem; }
-        .text-base { font-size: 1rem; }
         .text-lg { font-size: 1.125rem; }
         .text-xl { font-size: 1.25rem; }
         .text-2xl { font-size: 1.5rem; }
-        .text-3xl { font-size: 1.875rem; }
         .text-5xl { font-size: 3rem; }
         .text-7xl { font-size: 4.5rem; }
         .text-center { text-align: center; }
@@ -164,49 +130,39 @@
         .font-bold { font-weight: 700; }
         .uppercase { text-transform: uppercase; }
         .tracking-wide { letter-spacing: 0.025em; }
-        .tracking-wider { letter-spacing: 0.05em; }
         .tracking-widest { letter-spacing: 0.1em; }
-        .leading-none { line-height: 1; }
         .leading-tight { line-height: 1.25; }
-        
-        /* Borders */
         .border { border-width: 1px; }
         .border-2 { border-width: 2px; }
         .border-l-2 { border-left-width: 2px; }
         .rounded { border-radius: 0.25rem; }
         .rounded-lg { border-radius: 0.5rem; }
         .rounded-full { border-radius: 9999px; }
-        
-        /* Effects */
-        .drop-shadow-md { filter: drop-shadow(0 4px 3px rgba(0, 0, 0, 0.07)); }
         .overflow-hidden { overflow: hidden; }
         .pointer-events-none { pointer-events: none; }
         .cursor-pointer { cursor: pointer; }
         .object-cover { object-fit: cover; }
         .hidden { display: none; }
-        .block { display: block; }
-        
-        /* Transforms */
         .transform { transform: translateZ(0); }
         .scale-x-\[-1\] { transform: scaleX(-1); }
         .translate-y-0 { transform: translateY(0); }
         .translate-y-20 { transform: translateY(5rem); }
-        
-        /* Transitions */
-        .transition-opacity { transition: opacity 0.3s; }
-        .transition-transform { transition: transform 0.3s; }
-        .transition-colors { transition: color 0.3s, border-color 0.3s, background-color 0.3s; }
         .transition-all { transition: all 0.3s; }
+        .transition-opacity { transition: opacity 0.3s; }
         .duration-500 { transition-duration: 500ms; }
         .duration-1000 { transition-duration: 1000ms; }
         .duration-\[2000ms\] { transition-duration: 2000ms; }
-        
-        /* Visibility */
         .opacity-0 { opacity: 0; }
+        .opacity-30 { opacity: 0.3; }
+        .opacity-100 { opacity: 1; }
+        .w-24 { width: 6rem; }
+        .h-16 { height: 4rem; }
+        .w-32 { width: 8rem; }
+        .h-1 { height: 0.25rem; }
+        .w-2 { width: 0.5rem; }
+        .h-2 { height: 0.5rem; }
         
-        /* Interactive */
         input[type="file"] { display: none; }
-        
         input[type="range"] {
             -webkit-appearance: none;
             width: 100%;
@@ -215,7 +171,6 @@
             background: #44403c;
             outline: none;
         }
-        
         input[type="range"]::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 1rem;
@@ -225,49 +180,23 @@
             cursor: pointer;
         }
         
-        input[type="range"]::-moz-range-thumb {
-            width: 1rem;
-            height: 1rem;
-            border-radius: 50%;
-            background: #D4AF37;
-            cursor: pointer;
-            border: none;
-        }
-        
-        /* Hover states */
-        .group:hover .group-hover\:text-amber-glow { color: #D4AF37; }
-        .group:hover .group-hover\:text-amber-dim { color: #8B5E3C; }
         .group:hover .group-hover\:opacity-100 { opacity: 1; }
-        
-        button:hover .hover\:text-stone-300 { color: #d6d3d1; }
-        .hover\:border-amber-glow:hover { border-color: #D4AF37; }
         .hover\:border-stone-500:hover { border-color: #78716c; }
         
-        /* Responsive */
         @media (min-width: 768px) {
             .md\:text-7xl { font-size: 4.5rem; }
-            .md\:text-3xl { font-size: 1.875rem; }
             .md\:text-2xl { font-size: 1.5rem; }
-            .md\:text-base { font-size: 1rem; }
-            .md\:text-xs { font-size: 0.75rem; }
             .md\:p-8 { padding: 2rem; }
-            .md\:w-80 { width: 20rem; }
-            .md\:right-auto { right: auto; }
-            .md\:flex-row { flex-direction: row; }
+            .md\:grid-cols-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
         }
     </style>
 </head>
 <body>
     <div id="root"></div>
 
-    <!-- MediaPipe -->
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands@0.4.1675469240/hands.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils@0.3.1675469240/camera_utils.min.js"></script>
-    
-    <!-- Babel -->
     <script src="https://unpkg.com/@babel/standalone@7.23.5/babel.min.js"></script>
-
-    <!-- React & Three.js UMD -->
     <script crossorigin src="https://unpkg.com/react@18.2.0/umd/react.production.min.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
     <script src="https://unpkg.com/three@0.160.0/build/three.min.js"></script>
@@ -279,14 +208,11 @@
         const { Canvas, useFrame } = window.ReactThreeFiber;
         const { OrbitControls, PerspectiveCamera, Stars, Sparkles } = window.drei;
 
-        // ============================================
-        // SHADERS - Multi-Shape Support
-        // ============================================
-        
+        // Complete Vertex Shader with 6 shapes
         const VERTEX_SHADER = `
             uniform float uTime;
             uniform float uExpansion;
-            uniform int uShape; // 0=tree, 1=giftbox, 2=uranus
+            uniform int uShape; // 0=tree, 1=giftbox, 2=uranus, 3=heart, 4=firework, 5=advent
             attribute vec3 aRandom;
             attribute vec4 aUV;
             varying vec2 vUv;
@@ -300,44 +226,28 @@
                 vExpansion = uExpansion;
                 vec3 pos = position;
                 
-                // ===== SHAPE 0: TREE =====
+                // SHAPE 0: TREE
                 if (uShape == 0) {
                     float breathe = sin(uTime * 1.5 + pos.y * 0.5) * 0.08 * (1.0 - uExpansion);
                     vec3 explodeDir = normalize(pos) * 12.0;
                     vec3 spiralPos = pos + normal * breathe;
                     float t = smoothstep(0.0, 1.0, uExpansion);
-                    vec3 drift = vec3(
-                        sin(uTime * 0.5 + aRandom.x * 10.0),
-                        cos(uTime * 0.3 + aRandom.y * 10.0),
-                        sin(uTime * 0.4 + aRandom.z * 10.0)
-                    ) * 0.5 * t;
+                    vec3 drift = vec3(sin(uTime * 0.5 + aRandom.x * 10.0), cos(uTime * 0.3 + aRandom.y * 10.0), sin(uTime * 0.4 + aRandom.z * 10.0)) * 0.5 * t;
                     pos = mix(spiralPos, spiralPos + explodeDir * aRandom.x * 2.5 + drift, t);
-                    vColor = vec3(0.83, 0.68, 0.21); // Gold
+                    vColor = vec3(0.83, 0.68, 0.21);
                 }
                 
-                // ===== SHAPE 1: GIFT BOX =====
+                // SHAPE 1: GIFT BOX
                 else if (uShape == 1) {
-                    // Box arrangement (cube)
                     float boxSize = 3.0;
-                    float gridSize = 5.0;
-                    int idx = int(aRandom.z * 125.0); // 5x5x5 = 125 particles
-                    
+                    int idx = int(aRandom.z * 125.0);
                     int x = idx % 5;
                     int y = (idx / 5) % 5;
                     int z = idx / 25;
-                    
-                    pos.x = (float(x) - 2.0) * boxSize / gridSize;
-                    pos.y = (float(y) - 2.0) * boxSize / gridSize;
-                    pos.z = (float(z) - 2.0) * boxSize / gridSize;
-                    
-                    // Bow on top (special particles)
-                    if (y == 4) {
-                        vColor = vec3(0.9, 0.2, 0.2); // Red bow
-                    } else {
-                        vColor = vec3(0.9, 0.7, 0.2); // Gold box
-                    }
-                    
-                    // Opening animation
+                    pos.x = (float(x) - 2.0) * boxSize / 5.0;
+                    pos.y = (float(y) - 2.0) * boxSize / 5.0;
+                    pos.z = (float(z) - 2.0) * boxSize / 5.0;
+                    vColor = (y == 4) ? vec3(0.9, 0.2, 0.2) : vec3(0.9, 0.7, 0.2);
                     if (uExpansion > 0.0) {
                         vec3 explosionDir = normalize(pos) * 8.0;
                         float rotation = uExpansion * 3.14159;
@@ -347,12 +257,10 @@
                     }
                 }
                 
-                // ===== SHAPE 2: URANUS =====
+                // SHAPE 2: URANUS
                 else if (uShape == 2) {
                     float radius = 3.5;
                     int particleIndex = int(aRandom.z * 203.0);
-                    
-                    // Core sphere (150 particles)
                     if (particleIndex < 150) {
                         float theta = aRandom.x * 6.28318;
                         float phi = aRandom.y * 3.14159;
@@ -360,22 +268,15 @@
                         pos.y = radius * sin(phi) * sin(theta);
                         pos.z = radius * cos(phi);
                         vColor = mix(vec3(0.31, 0.82, 0.77), vec3(0.22, 0.70, 0.67), aRandom.y);
-                    }
-                    // Rings (26 particles - vertical!)
-                    else if (particleIndex < 176) {
+                    } else if (particleIndex < 176) {
                         float angle = aRandom.x * 6.28318;
                         float ringRadius = radius * 1.6;
                         pos.x = ringRadius * cos(angle);
                         pos.z = ringRadius * sin(angle);
                         pos.y = 0.0;
-                        // Rotate to vertical
-                        float temp = pos.y;
-                        pos.y = pos.z;
-                        pos.z = temp;
+                        float temp = pos.y; pos.y = pos.z; pos.z = temp;
                         vColor = vec3(0.7, 0.96, 0.92);
-                    }
-                    // Moons (27 particles)
-                    else {
+                    } else {
                         float orbitRadius = radius * (2.0 + aRandom.y);
                         float angle = uTime * 0.3 + aRandom.x * 6.28318;
                         float tilt = aRandom.z * 1.57;
@@ -384,8 +285,6 @@
                         pos.z = orbitRadius * sin(angle) * cos(tilt);
                         vColor = vec3(0.8, 0.9, 1.0);
                     }
-                    
-                    // Tilted rotation (Uranus characteristic)
                     float rotationAngle = uTime * 0.1;
                     float cosR = cos(rotationAngle);
                     float sinR = sin(rotationAngle);
@@ -393,23 +292,75 @@
                     float z2 = pos.y * sinR + pos.z * cosR;
                     pos.y = y2;
                     pos.z = z2;
-                    
-                    // Explosion
                     if (uExpansion > 0.0) {
                         vec3 explosionDir = normalize(pos) * 10.0;
                         pos = mix(pos, pos + explosionDir, uExpansion);
                     }
                 }
                 
+                // SHAPE 3: HEART
+                else if (uShape == 3) {
+                    float t = aRandom.x * 6.28318;
+                    float scale = 2.5;
+                    float x = 16.0 * pow(sin(t), 3.0);
+                    float y = 13.0 * cos(t) - 5.0 * cos(2.0*t) - 2.0 * cos(3.0*t) - cos(4.0*t);
+                    pos.x = x * scale / 16.0;
+                    pos.y = (y - 8.0) * scale / 16.0;
+                    pos.z = (aRandom.y - 0.5) * 0.5;
+                    vColor = mix(vec3(0.937, 0.267, 0.267), vec3(0.988, 0.596, 0.596), aRandom.z);
+                    if (uExpansion > 0.0) {
+                        vec3 explosionDir = normalize(vec3(pos.x, pos.y, 0.0)) * 8.0;
+                        pos += explosionDir * uExpansion;
+                        pos.z += sin(uTime * 2.0 + aRandom.x * 10.0) * 2.0 * uExpansion;
+                    }
+                }
+                
+                // SHAPE 4: FIREWORK
+                else if (uShape == 4) {
+                    float radius = 0.5;
+                    float theta = aRandom.x * 6.28318;
+                    float phi = aRandom.y * 3.14159;
+                    pos.x = radius * sin(phi) * cos(theta);
+                    pos.y = radius * sin(phi) * sin(theta);
+                    pos.z = radius * cos(phi);
+                    float hue = aRandom.z;
+                    if (hue < 0.33) vColor = vec3(0.937, 0.267, 0.267);
+                    else if (hue < 0.66) vColor = vec3(0.267, 0.937, 0.267);
+                    else vColor = vec3(0.267, 0.267, 0.937);
+                    if (uExpansion > 0.0) {
+                        vec3 explosionDir = normalize(pos) * 15.0;
+                        float speed = 1.0 + aRandom.y * 2.0;
+                        pos += explosionDir * uExpansion * speed;
+                        pos.y -= uExpansion * uExpansion * 3.0;
+                    }
+                }
+                
+                // SHAPE 5: ADVENT CALENDAR
+                else if (uShape == 5) {
+                    int idx = int(aRandom.z * 24.0);
+                    int col = idx % 6;
+                    int row = idx / 6;
+                    float spacing = 1.5;
+                    pos.x = (float(col) - 2.5) * spacing;
+                    pos.y = (2.0 - float(row)) * spacing;
+                    pos.z = 0.0;
+                    vColor = vec3(0.8, 0.8, 0.85);
+                    if (uExpansion > 0.0) {
+                        float flipProgress = (uExpansion - float(idx) / 24.0) * 24.0;
+                        if (flipProgress > 0.0) {
+                            pos.z = sin(flipProgress * 3.14159) * 2.0;
+                            pos.y += (1.0 - cos(flipProgress * 3.14159)) * 1.0;
+                        }
+                    }
+                }
+                
                 vec4 mvPosition = modelViewMatrix * vec4(pos, 1.0);
                 gl_Position = projectionMatrix * mvPosition;
-                
                 float dist = -mvPosition.z;
                 float dotSize = 25.0 * (1.0 + aRandom.z * 0.5);
                 float photoSize = 350.0;
                 float currentSize = mix(dotSize, photoSize, uExpansion);
                 gl_PointSize = currentSize * (1.0 / dist);
-                
                 vUv = uv;
                 vBrightness = 0.6 + 0.4 * sin(uTime * 2.0 + aRandom.y * 20.0);
             }
@@ -429,19 +380,11 @@
                 vec2 uv = gl_PointCoord;
                 float dist = length(uv - 0.5);
                 if (dist > 0.5) discard;
-                
                 float glow = 1.0 - (dist * 2.0);
                 glow = pow(glow, 2.5);
-                
-                // Ice sparkle for Uranus
-                float sparkle = 1.0;
-                if (uShape == 2) {
-                    sparkle = sin(uTime * 5.0 + dist * 10.0) * 0.5 + 0.5;
-                }
-                
+                float sparkle = (uShape == 2) ? sin(uTime * 5.0 + dist * 10.0) * 0.5 + 0.5 : 1.0;
                 vec3 color = vColor * (0.8 + vBrightness * 0.4) * sparkle;
                 vec4 colorDot = vec4(color * 1.5, glow * 0.8);
-                
                 vec4 colorPhoto = vec4(0.0);
                 if (uHasTexture > 0.5) {
                     vec2 photoUV = vec2(vAtlasUV.x + uv.x * vAtlasUV.z, vAtlasUV.y + uv.y * vAtlasUV.w);
@@ -455,7 +398,6 @@
                 } else {
                     colorPhoto = vec4(color * 2.0, glow);
                 }
-                
                 float mixFactor = smoothstep(0.15, 0.7, vExpansion);
                 if (uHasTexture < 0.5) {
                     gl_FragColor = colorDot;
@@ -467,7 +409,6 @@
             }
         `;
 
-        // Texture Atlas (same as before)
         const createTextureAtlas = async (files, onProgress) => {
             const size = 2048;
             const canvas = document.createElement('canvas');
@@ -475,20 +416,17 @@
             canvas.height = size;
             const ctx = canvas.getContext('2d');
             if (!ctx) return null;
-
             const processFiles = files.slice(0, 30);
             const cols = Math.ceil(Math.sqrt(processFiles.length));
             const rows = Math.ceil(processFiles.length / cols);
             const itemW = size / cols;
             const itemH = size / rows;
             const uvs = [];
-
             for (let i = 0; i < processFiles.length; i++) {
                 if (onProgress) onProgress((i / processFiles.length) * 100);
                 const img = new Image();
                 img.src = URL.createObjectURL(processFiles[i]);
                 await new Promise((resolve) => { img.onload = resolve; });
-
                 const x = (i % cols) * itemW;
                 const y = Math.floor(i / cols) * itemH;
                 const scale = Math.max(itemW / img.width, itemH / img.height);
@@ -496,20 +434,13 @@
                 const h = img.height * scale;
                 const offsetX = (itemW - w) / 2;
                 const offsetY = (itemH - h) / 2;
-
                 ctx.save();
                 ctx.beginPath();
                 ctx.rect(x, y, itemW, itemH);
                 ctx.clip();
                 ctx.drawImage(img, x + offsetX, y + offsetY, w, h);
                 ctx.restore();
-
-                uvs.push({
-                    x: x / size,
-                    y: 1.0 - ((y + itemH) / size),
-                    w: itemW / size,
-                    h: itemH / size
-                });
+                uvs.push({ x: x / size, y: 1.0 - ((y + itemH) / size), w: itemW / size, h: itemH / size });
             }
             if (onProgress) onProgress(100);
             const texture = new THREE.CanvasTexture(canvas);
@@ -520,22 +451,15 @@
             return { texture, uvs };
         };
 
-        // PhotoTree Component with Shape Support
         const PhotoTree = ({ atlasData, expansion, count, shape }) => {
             const shaderRef = useRef();
-            
-            // Shape index: tree=0, giftbox=1, uranus=2
-            const shapeIndex = shape === 'tree' ? 0 : shape === 'giftbox' ? 1 : 2;
+            const shapeMap = { tree: 0, giftbox: 1, uranus: 2, heart: 3, firework: 4, advent: 5 };
+            const shapeIndex = shapeMap[shape] || 0;
             
             const { positions, randoms } = useMemo(() => {
                 const pos = new Float32Array(count * 3);
                 const rnd = new Float32Array(count * 3);
-                
-                // Tree shape (spiral)
-                const height = 14;
-                const radius = 3.5;
-                const loops = 7;
-
+                const height = 14, radius = 3.5, loops = 7;
                 for (let i = 0; i < count; i++) {
                     const t = i / count;
                     const angle = t * loops * Math.PI * 2;
@@ -569,9 +493,7 @@
                     shaderRef.current.uniforms.uTime.value = state.clock.elapsedTime;
                     shaderRef.current.uniforms.uShape.value = shapeIndex;
                     shaderRef.current.uniforms.uExpansion.value = THREE.MathUtils.lerp(
-                        shaderRef.current.uniforms.uExpansion.value,
-                        expansion,
-                        0.08
+                        shaderRef.current.uniforms.uExpansion.value, expansion, 0.08
                     );
                     if (atlasData) {
                         shaderRef.current.uniforms.uTexture.value = atlasData.texture;
@@ -608,46 +530,33 @@
             );
         };
 
-        // Hand Tracker (same as before)
         const HandTracker = ({ onHandUpdate }) => {
             const videoRef = useRef(null);
             const smoothedOpenness = useRef(0);
-
             useEffect(() => {
-                let camera = null;
-                let hands = null;
-
+                let camera = null, hands = null;
                 const onResults = (results) => {
                     if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
                         const landmarks = results.multiHandLandmarks[0];
-                        const wrist = landmarks[0];
-                        const middleTip = landmarks[12];
-                        const indexMCP = landmarks[5];
-
+                        const wrist = landmarks[0], middleTip = landmarks[12], indexMCP = landmarks[5];
                         const distTip = Math.hypot(middleTip.x - wrist.x, middleTip.y - wrist.y);
                         const distRef = Math.hypot(indexMCP.x - wrist.x, indexMCP.y - wrist.y);
-                        
                         const ratio = distTip / distRef;
                         let rawOpenness = (ratio - 0.8) / (2.0 - 0.8);
                         rawOpenness = Math.max(0, Math.min(1, rawOpenness));
-                        
                         const alpha = 0.15;
                         smoothedOpenness.current = smoothedOpenness.current * (1 - alpha) + rawOpenness * alpha;
-                        
                         let output = smoothedOpenness.current;
                         if (output < 0.05) output = 0;
                         if (output > 0.95) output = 1;
-                        
                         onHandUpdate(output);
                     }
                 };
-
                 const initMediaPipe = async () => {
                     if (!window.Hands) { setTimeout(initMediaPipe, 100); return; }
                     hands = new window.Hands({locateFile: (file) => `https://cdn.jsdelivr.net/npm/@mediapipe/hands/${file}`});
                     hands.setOptions({ maxNumHands: 1, modelComplexity: 1, minDetectionConfidence: 0.5, minTrackingConfidence: 0.5 });
                     hands.onResults(onResults);
-
                     if (videoRef.current) {
                         camera = new window.Camera(videoRef.current, {
                             onFrame: async () => { await hands.send({image: videoRef.current}); },
@@ -662,11 +571,9 @@
                     if (hands) try { hands.close(); } catch(e) {}
                 };
             }, []);
-
             return <video ref={videoRef} className="fixed bottom-4 right-4 w-24 h-16 object-cover rounded border opacity-30 pointer-events-none transform scale-x-[-1] z-50" style={{borderColor: 'rgba(212, 175, 55, 0.2)'}} playsInline muted />;
         };
 
-        // Main App
         const App = () => {
             const [images, setImages] = useState([]);
             const [expansion, setExpansion] = useState(0);
@@ -676,7 +583,7 @@
             const [buildProgress, setBuildProgress] = useState(0);
             const [isBuilding, setIsBuilding] = useState(false);
             const [atlasData, setAtlasData] = useState(null);
-            const [shape, setShape] = useState('tree'); // NEW: Shape state
+            const [shape, setShape] = useState('tree');
 
             useEffect(() => {
                 const timer = setTimeout(() => setIsWelcome(false), 5000);
@@ -699,177 +606,114 @@
 
             const currentExpansion = useCamera ? expansion : manualExpansion;
 
-            // Shape definitions
             const shapes = [
-                { id: 'tree', icon: '🎄', name: 'Tree', subtitle: 'Classic', color: 'amber' },
-                { id: 'giftbox', icon: '🎁', name: 'Gift Box', subtitle: 'Surprise', color: 'amber' },
-                { id: 'uranus', icon: '🌀', name: 'Uranus', subtitle: 'Innovation', color: 'cyan' }
+                { id: 'tree', icon: '🎄', name: 'Tree', theme: 'Christmas', color: 'amber' },
+                { id: 'giftbox', icon: '🎁', name: 'Gift', theme: 'Surprise', color: 'amber' },
+                { id: 'heart', icon: '❤️', name: 'Heart', theme: 'Love', color: 'red' },
+                { id: 'firework', icon: '🎆', name: 'Firework', theme: 'Celebration', color: 'purple' },
+                { id: 'advent', icon: '📅', name: 'Advent', theme: 'Countdown', color: 'amber' },
+                { id: 'uranus', icon: '🌀', name: 'Uranus', theme: 'Innovation', color: 'cyan' }
             ];
+
+            const getLightColor = () => {
+                if (shape === 'uranus') return '#4FD1C5';
+                if (shape === 'heart') return '#EF4444';
+                if (shape === 'firework') return '#A78BFA';
+                return '#D4AF37';
+            };
 
             return (
                 <div className="w-full h-screen relative bg-coffee-900 overflow-hidden">
-                    
-                    {/* Welcome Screen */}
                     <div className={`absolute inset-0 z-50 flex flex-col items-center justify-center bg-coffee-900 transition-opacity duration-[2000ms] ${isWelcome ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
                         <h1 className="font-ritual text-5xl md:text-7xl text-amber-glow tracking-widest mb-4 animate-pulse text-center">
                             N43 RITUAL<br/>
-                            <span className="text-xl md:text-2xl font-ui font-light text-amber-dim mt-2 block" style={{letterSpacing: '0.2em', opacity: 0.6}}>Christmas Special</span>
+                            <span className="text-xl md:text-2xl font-ui font-light mt-2 block" style={{letterSpacing: '0.2em', opacity: 0.6, color: '#8B5E3C'}}>Complete Edition</span>
                         </h1>
                         <p className="font-ritual text-stone-400 text-lg italic mt-4 text-center" style={{maxWidth: '28rem'}}>
-                            Not every year has photos.<br/>
-                            But every year deserves a ritual.
+                            Six shapes. Infinite memories.<br/>
+                            Every year deserves a ritual.
                         </p>
-                        <p className="font-ui text-xs text-stone-500 mt-6 tracking-wide">
-                            Curated by Kelly Hung
-                        </p>
+                        <p className="font-ui text-xs text-stone-500 mt-4 tracking-wide">Curated by Kelly Hung</p>
                     </div>
 
-                    {/* 3D Scene */}
                     <Canvas>
                         <PerspectiveCamera makeDefault position={[0, 0, 25]} fov={60} />
                         <OrbitControls enablePan={false} autoRotate={currentExpansion < 0.1} autoRotateSpeed={0.8} minDistance={10} maxDistance={40} />
                         <color attach="background" args={['#0c0a09']} />
                         <Stars radius={100} depth={50} count={3000} factor={4} saturation={0} fade speed={0.5} />
                         <ambientLight intensity={0.4} color="#8B5E3C" />
-                        <pointLight position={[10, 10, 10]} intensity={0.8} color={shape === 'uranus' ? '#4FD1C5' : '#D4AF37'} />
+                        <pointLight position={[10, 10, 10]} intensity={0.8} color={getLightColor()} />
                         <PhotoTree atlasData={atlasData} expansion={currentExpansion} count={180} shape={shape} />
-                        <Sparkles count={80} scale={15} size={2} speed={0.2} opacity={0.3} color={shape === 'uranus' ? '#4FD1C5' : '#D4AF37'} />
+                        <Sparkles count={80} scale={15} size={2} speed={0.2} opacity={0.3} color={getLightColor()} />
                     </Canvas>
 
-                    {/* Header */}
-                    <div className={`absolute top-0 left-0 w-full p-6 md:p-8 transition-opacity duration-1000 flex flex-col md:flex-row justify-between items-start pointer-events-none ${isWelcome ? 'opacity-0' : 'opacity-100'}`}>
-                        <div>
-                            <h2 className="font-ritual text-2xl md:text-3xl text-amber-glow drop-shadow-md leading-none">
-                                Christmas Memories<br/>
-                                <span className="font-ui text-sm md:text-base text-amber-dim font-light tracking-wide">聖誕回憶</span>
-                            </h2>
-                            <div className="font-ui text-10px md:text-xs text-stone-500 mt-2 tracking-wider uppercase border-l-2 border-stone-800 pl-2">
-                                <p>Annual Ritual v1.2 Christmas Special</p>
-                                <p className="mt-0.5" style={{color: 'rgba(139, 94, 60, 0.8)'}}>Curated by Kelly Hung</p>
-                            </div>
+                    <div className={`absolute top-0 left-0 w-full p-6 md:p-8 transition-opacity duration-1000 flex flex-col items-start pointer-events-none ${isWelcome ? 'opacity-0' : 'opacity-100'}`}>
+                        <h2 className="font-ritual text-2xl text-amber-glow leading-tight">
+                            Christmas Memories
+                        </h2>
+                        <div className="font-ui text-10px text-stone-500 mt-1 tracking-widest uppercase border-l-2 border-stone-800 pl-2">
+                            <p>Annual Ritual v2.0</p>
                         </div>
                     </div>
 
-                    {/* Control Panel */}
-                    <div className={`absolute bottom-8 left-6 right-6 glass-panel p-5 transition-transform duration-1000 ${isWelcome ? 'translate-y-20 opacity-0' : 'translate-y-0 opacity-100'}`} style={{width: window.innerWidth >= 768 ? '20rem' : 'calc(100% - 3rem)'}}>
-                        
+                    <div className={`absolute bottom-8 left-6 right-6 glass-panel p-5 transition-transform duration-1000 ${isWelcome ? 'translate-y-20 opacity-0' : 'translate-y-0 opacity-100'}`} style={{maxWidth: '22rem'}}>
                         {isBuilding && (
                             <div className="absolute inset-0 z-10 flex flex-col items-center justify-center rounded" style={{backgroundColor: 'rgba(12, 10, 9, 0.95)'}}>
                                 <span className="font-ritual text-amber-glow text-xl mb-1">Weaving...</span>
-                                <span className="font-ui text-stone-500 text-xs mb-2">編織中...</span>
-                                <div className="w-32 h-1 bg-stone-700 rounded overflow-hidden">
+                                <div className="w-32 h-1 rounded overflow-hidden" style={{backgroundColor: '#44403c'}}>
                                     <div className="h-full bg-amber-glow loading-bar" style={{width: `${buildProgress}%`}}></div>
                                 </div>
                             </div>
                         )}
 
-                        {/* Shape Selector */}
                         <div className="mb-4">
                             <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2">
-                                Particle Shape / 粒子形狀
+                                Particle Shape
                             </label>
-                            <div className="grid grid-cols-3 gap-2">
+                            <div className="grid grid-cols-3 md:grid-cols-3 gap-2">
                                 {shapes.map(s => (
                                     <button
                                         key={s.id}
                                         onClick={() => setShape(s.id)}
                                         className={`border rounded-lg p-2 transition-all ${
                                             shape === s.id
-                                                ? s.color === 'cyan' 
-                                                    ? 'border-cyan-glow bg-cyan-glow\/10' 
-                                                    : 'border-amber-glow bg-amber-glow\/10'
+                                                ? `border-${s.color}-glow bg-${s.color}-glow\/10`
                                                 : 'border-stone-700 hover:border-stone-500'
                                         }`}
+                                        style={shape === s.id ? {
+                                            borderColor: s.color === 'amber' ? '#D4AF37' : s.color === 'red' ? '#EF4444' : s.color === 'cyan' ? '#4FD1C5' : '#A78BFA',
+                                            backgroundColor: s.color === 'amber' ? 'rgba(212,175,55,0.1)' : s.color === 'red' ? 'rgba(239,68,68,0.1)' : s.color === 'cyan' ? 'rgba(79,209,197,0.1)' : 'rgba(167,139,250,0.1)'
+                                        } : {}}
                                     >
                                         <div className="text-2xl mb-1">{s.icon}</div>
                                         <div className="text-xs font-bold">{s.name}</div>
-                                        <div className="text-9px text-stone-600">{s.subtitle}</div>
+                                        <div className="text-9px text-stone-600">{s.theme}</div>
                                     </button>
                                 ))}
                             </div>
                         </div>
 
-                        {/* Upload */}
                         <div className="mb-4">
-                            <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2">
-                                Photos (Optional) / 照片（可選）
-                            </label>
-                            <label className="cursor-pointer group flex items-center justify-between border border-stone-600 rounded px-4 py-3 hover:border-amber-glow transition-colors bg-stone-900\/50">
-                                <div className="flex flex-col">
-                                    <span className="text-stone-300 text-sm group-hover:text-amber-glow transition-colors">
-                                        {images.length > 0 ? `${images.length} Photos Added` : "Upload Photos"}
-                                    </span>
-                                    <span className="text-10px text-stone-500 group-hover:text-amber-dim">
-                                        {images.length > 0 ? `${images.length} 張照片已選` : "上傳照片"}
-                                    </span>
-                                </div>
+                            <label className="cursor-pointer group flex items-center justify-between border border-stone-600 rounded px-4 py-3 transition-all" style={{backgroundColor: 'rgba(28, 25, 23, 0.5)'}}>
+                                <span className="text-stone-300 text-sm">{images.length > 0 ? `${images.length} Photos` : "Upload Photos"}</span>
                                 <input type="file" multiple accept="image/*" onChange={handleUpload} />
                                 <div className="w-2 h-2 rounded-full bg-amber-glow opacity-50 group-hover:opacity-100"></div>
                             </label>
-                            <p className="text-9px text-stone-500 mt-2 text-center italic">
-                                Even without photos, unfold your year.
-                            </p>
                         </div>
 
-                        {/* Controls */}
                         <div>
-                            <label className="block font-ui text-10px font-bold uppercase tracking-widest text-stone-400 mb-2">
-                                Control / 控制
-                            </label>
-                            <div className="flex gap-2 mb-3">
-                                <button 
-                                    onClick={() => setUseCamera(false)}
-                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${!useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow\/10' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
-                                    style={!useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212, 175, 55, 0.1)'} : {}}
-                                >
-                                    <span className="text-xs font-bold tracking-wider uppercase">Slider</span>
-                                    <span className="text-9px opacity-70">滑桿</span>
-                                </button>
-                                <button 
-                                    onClick={() => setUseCamera(true)}
-                                    className={`flex-1 py-2 border rounded transition-all flex flex-col items-center justify-center gap-0.5 ${useCamera ? 'border-amber-glow text-amber-glow bg-amber-glow\/10' : 'border-stone-700 text-stone-500 hover:text-stone-300'}`}
-                                    style={useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212, 175, 55, 0.1)'} : {}}
-                                >
-                                    <span className="text-xs font-bold tracking-wider uppercase">Camera</span>
-                                    <span className="text-9px opacity-70">相機</span>
-                                </button>
+                            <div className="flex gap-2 mb-2">
+                                <button onClick={() => setUseCamera(false)} className={`flex-1 py-2 border rounded transition-all text-xs ${!useCamera ? 'border-amber-glow' : 'border-stone-700'}`} style={!useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212,175,55,0.1)'} : {}}>Slider</button>
+                                <button onClick={() => setUseCamera(true)} className={`flex-1 py-2 border rounded transition-all text-xs ${useCamera ? 'border-amber-glow' : 'border-stone-700'}`} style={useCamera ? {borderColor: '#D4AF37', color: '#D4AF37', backgroundColor: 'rgba(212,175,55,0.1)'} : {}}>Camera</button>
                             </div>
-
-                            <div className={`transition-opacity duration-500 ${useCamera ? 'opacity-30 pointer-events-none' : 'opacity-100'}`}>
-                                <input 
-                                    type="range" min="0" max="1" step="0.001" 
-                                    value={manualExpansion}
-                                    onChange={(e) => setManualExpansion(parseFloat(e.target.value))}
-                                />
-                            </div>
-                            
-                            <div className="mt-3 text-center">
-                                <p className="font-ritual text-stone-400 text-sm italic leading-tight">
-                                    {useCamera ? "Open your hand to reveal..." : "Slide to unfold..."}
-                                </p>
-                                <p className="font-ui text-stone-600 text-xs mt-1">
-                                    {useCamera ? "張開手掌展現" : "滑動展開"}
-                                </p>
+                            <div className={`${useCamera ? 'opacity-30 pointer-events-none' : ''}`}>
+                                <input type="range" min="0" max="1" step="0.001" value={manualExpansion} onChange={(e) => setManualExpansion(parseFloat(e.target.value))} />
                             </div>
                         </div>
-
-                        {/* Hand Gesture Guide */}
-                        <details className="mt-4 text-xs text-stone-500 border border-stone-700 rounded p-2">
-                            <summary className="cursor-pointer text-amber-glow font-bold">
-                                👋 Hand Gesture Guide / 手勢指南
-                            </summary>
-                            <ul className="mt-2 space-y-1 text-10px">
-                                <li>✋ <span className="text-stone-400">Open Palm</span> → Scatter / 散開</li>
-                                <li>✊ <span className="text-stone-400">Closed Fist</span> → Gather / 聚合</li>
-                            </ul>
-                        </details>
                     </div>
-                    
-                    {/* Footer */}
+
                     <div className={`absolute bottom-2 w-full text-center pointer-events-none transition-opacity duration-1000 ${isWelcome ? 'opacity-0' : 'opacity-100'}`}>
-                        <p className="font-ui text-9px text-stone-700 tracking-widest uppercase">
-                            © NirvanaCity
-                        </p>
+                        <p className="font-ui text-9px text-stone-700 tracking-widest uppercase">© NirvanaCity</p>
                     </div>
 
                     {useCamera && <HandTracker onHandUpdate={setExpansion} />}
@@ -877,8 +721,7 @@
             );
         };
 
-        const root = ReactDOM.createRoot(document.getElementById('root'));
-        root.render(<App />);
+        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
     </script>
 </body>
 </html>
